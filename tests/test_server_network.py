@@ -14,6 +14,7 @@ import socket
 import struct
 import threading
 import time
+from collections.abc import Generator
 from typing import Any
 
 import pytest
@@ -91,7 +92,7 @@ class MockSocketClient:
 
 
 @pytest.fixture
-def running_server() -> TCPServer:
+def running_server() -> Generator[TCPServer, None, None]:
     """Fixture que inicia un TCPServer en un puerto dinámico y asegura su cierre al terminar."""
     server = TCPServer(host="127.0.0.1", port=0, accept_timeout=0.2)
     server.start(blocking=False)
