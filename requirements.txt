@@ -1,0 +1,1 @@
+# Requerimientos base para producción (librería estándar de Python por defecto)
