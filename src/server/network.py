@@ -285,10 +285,13 @@ class TCPServer:
                 break
 
             handler = ClientHandler(client_sock, client_addr, server=self)
+            # El arranque ocurre dentro de la misma sección crítica que el
+            # registro: así stop() nunca observa un handler en _clients cuyo
+            # hilo todavía no fue iniciado (join() sobre un hilo sin start()
+            # lanza RuntimeError).
             with self._clients_lock:
                 self._clients[handler.client_id] = handler
-
-            handler.start()
+                handler.start()
 
     def stop(self) -> None:
         """Ejecuta un apagado ordenado (graceful shutdown) del servidor.
