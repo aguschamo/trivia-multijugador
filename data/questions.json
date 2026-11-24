@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "questions": [
+    {
+      "id": "Q-001",
+      "category": "ciencia",
+      "difficulty": "medium",
+      "prompt": "¿Cuál es el planeta más grande del sistema solar?",
+      "options": [
+        { "id": "A", "text": "Júpiter" },
+        { "id": "B", "text": "Saturno" },
+        { "id": "C", "text": "Neptuno" },
+        { "id": "D", "text": "Mercurio" }
+      ],
+      "correct_option": "A",
+      "time_limit_seconds": 20
+    },
+    {
+      "id": "Q-002",
+      "category": "ciencia",
+      "difficulty": "easy",
+      "prompt": "¿Cuántos días tiene un año bisiesto?",
+      "options": [
+        { "id": "A", "text": "365" },
+        { "id": "B", "text": "364" },
+        { "id": "C", "text": "367" },
+        { "id": "D", "text": "366" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 10
+    },
+    {
+      "id": "Q-003",
+      "category": "ciencia",
+      "difficulty": "medium",
+      "prompt": "¿Qué gas absorben las plantas durante la fotosíntesis?",
+      "options": [
+        { "id": "A", "text": "Oxígeno" },
+        { "id": "B", "text": "Dióxido de carbono" },
+        { "id": "C", "text": "Nitrógeno" },
+        { "id": "D", "text": "Hidrógeno" }
+      ],
+      "correct_option": "B",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-004",
+      "category": "ciencia",
+      "difficulty": "hard",
+      "prompt": "¿Cuál es el elemento químico cuyo símbolo es \"Fe\"?",
+      "options": [
+        { "id": "A", "text": "Flúor" },
+        { "id": "B", "text": "Fermio" },
+        { "id": "C", "text": "Hierro" },
+        { "id": "D", "text": "Fósforo" }
+      ],
+      "correct_option": "C",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-005",
+      "category": "historia",
+      "difficulty": "easy",
+      "prompt": "¿En qué año llegó el ser humano a la Luna por primera vez?",
+      "options": [
+        { "id": "A", "text": "1961" },
+        { "id": "B", "text": "1965" },
+        { "id": "C", "text": "1972" },
+        { "id": "D", "text": "1969" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 12
+    },
+    {
+      "id": "Q-006",
+      "category": "historia",
+      "difficulty": "medium",
+      "prompt": "¿En qué año cayó el Muro de Berlín?",
+      "options": [
+        { "id": "A", "text": "1987" },
+        { "id": "B", "text": "1990" },
+        { "id": "C", "text": "1991" },
+        { "id": "D", "text": "1989" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 12
+    },
+    {
+      "id": "Q-007",
+      "category": "historia",
+      "difficulty": "hard",
+      "prompt": "¿En qué año se firmó la Declaración de Independencia de Estados Unidos?",
+      "options": [
+        { "id": "A", "text": "1776" },
+        { "id": "B", "text": "1775" },
+        { "id": "C", "text": "1783" },
+        { "id": "D", "text": "1789" }
+      ],
+      "correct_option": "A",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-008",
+      "category": "geografia",
+      "difficulty": "medium",
+      "prompt": "¿Cuál es el río más largo de América del Sur?",
+      "options": [
+        { "id": "A", "text": "Amazonas" },
+        { "id": "B", "text": "Paraná" },
+        { "id": "C", "text": "Orinoco" },
+        { "id": "D", "text": "Magdalena" }
+      ],
+      "correct_option": "A",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-009",
+      "category": "geografia",
+      "difficulty": "easy",
+      "prompt": "¿Cuál es el país más pequeño del mundo?",
+      "options": [
+        { "id": "A", "text": "Mónaco" },
+        { "id": "B", "text": "Ciudad del Vaticano" },
+        { "id": "C", "text": "San Marino" },
+        { "id": "D", "text": "Liechtenstein" }
+      ],
+      "correct_option": "B",
+      "time_limit_seconds": 12
+    },
+    {
+      "id": "Q-010",
+      "category": "geografia",
+      "difficulty": "hard",
+      "prompt": "¿En qué océano se encuentra la isla de Madagascar?",
+      "options": [
+        { "id": "A", "text": "Atlántico" },
+        { "id": "B", "text": "Pacífico" },
+        { "id": "C", "text": "Índico" },
+        { "id": "D", "text": "Ártico" }
+      ],
+      "correct_option": "C",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-011",
+      "category": "arte",
+      "difficulty": "easy",
+      "prompt": "¿Quién pintó la Mona Lisa?",
+      "options": [
+        { "id": "A", "text": "Rafael" },
+        { "id": "B", "text": "Miguel Ángel" },
+        { "id": "C", "text": "Sandro Botticelli" },
+        { "id": "D", "text": "Leonardo da Vinci" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 10
+    },
+    {
+      "id": "Q-012",
+      "category": "arte",
+      "difficulty": "medium",
+      "prompt": "¿Quién esculpió la obra \"El Pensador\"?",
+      "options": [
+        { "id": "A", "text": "Antonio Canova" },
+        { "id": "B", "text": "Auguste Rodin" },
+        { "id": "C", "text": "Gian Lorenzo Bernini" },
+        { "id": "D", "text": "Donatello" }
+      ],
+      "correct_option": "B",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-013",
+      "category": "arte",
+      "difficulty": "hard",
+      "prompt": "¿En qué museo se conserva la obra \"Las Meninas\", de Velázquez?",
+      "options": [
+        { "id": "A", "text": "Museo del Prado" },
+        { "id": "B", "text": "Museo del Louvre" },
+        { "id": "C", "text": "Galería Uffizi" },
+        { "id": "D", "text": "Museo Reina Sofía" }
+      ],
+      "correct_option": "A",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-014",
+      "category": "tecnologia",
+      "difficulty": "easy",
+      "prompt": "¿Qué significa la sigla CPU?",
+      "options": [
+        { "id": "A", "text": "Unidad Central de Procesamiento" },
+        { "id": "B", "text": "Unidad de Comunicación Periférica" },
+        { "id": "C", "text": "Centro de Procesamiento Usuario" },
+        { "id": "D", "text": "Control de Programa Universal" }
+      ],
+      "correct_option": "A",
+      "time_limit_seconds": 12
+    },
+    {
+      "id": "Q-015",
+      "category": "tecnologia",
+      "difficulty": "medium",
+      "prompt": "¿En qué año se presentó el primer iPhone?",
+      "options": [
+        { "id": "A", "text": "2005" },
+        { "id": "B", "text": "2006" },
+        { "id": "C", "text": "2007" },
+        { "id": "D", "text": "2010" }
+      ],
+      "correct_option": "C",
+      "time_limit_seconds": 12
+    },
+    {
+      "id": "Q-016",
+      "category": "tecnologia",
+      "difficulty": "hard",
+      "prompt": "¿Quién redactó el primer algoritmo destinado a una máquina calculadora?",
+      "options": [
+        { "id": "A", "text": "Ada Lovelace" },
+        { "id": "B", "text": "Alan Turing" },
+        { "id": "C", "text": "Charles Babbage" },
+        { "id": "D", "text": "Grace Hopper" }
+      ],
+      "correct_option": "A",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-017",
+      "category": "deportes",
+      "difficulty": "easy",
+      "prompt": "¿Cada cuántos años se disputa la Copa del Mundo de fútbol?",
+      "options": [
+        { "id": "A", "text": "Cada 2 años" },
+        { "id": "B", "text": "Cada 3 años" },
+        { "id": "C", "text": "Cada 4 años" },
+        { "id": "D", "text": "Cada 5 años" }
+      ],
+      "correct_option": "C",
+      "time_limit_seconds": 10
+    },
+    {
+      "id": "Q-018",
+      "category": "deportes",
+      "difficulty": "medium",
+      "prompt": "¿En qué país se celebró la primera Copa del Mundo de fútbol?",
+      "options": [
+        { "id": "A", "text": "Brasil" },
+        { "id": "B", "text": "Uruguay" },
+        { "id": "C", "text": "Italia" },
+        { "id": "D", "text": "Francia" }
+      ],
+      "correct_option": "B",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-019",
+      "category": "deportes",
+      "difficulty": "hard",
+      "prompt": "¿Cuántos puntos otorga un touchdown en el fútbol americano?",
+      "options": [
+        { "id": "A", "text": "3" },
+        { "id": "B", "text": "7" },
+        { "id": "C", "text": "1" },
+        { "id": "D", "text": "6" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-020",
+      "category": "naturaleza",
+      "difficulty": "easy",
+      "prompt": "¿Cuál es el animal terrestre más rápido del mundo?",
+      "options": [
+        { "id": "A", "text": "Antílope" },
+        { "id": "B", "text": "Caballo" },
+        { "id": "C", "text": "León" },
+        { "id": "D", "text": "Guepardo" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 10
+    },
+    {
+      "id": "Q-021",
+      "category": "naturaleza",
+      "difficulty": "medium",
+      "prompt": "¿Cuál es el mamífero más grande del planeta?",
+      "options": [
+        { "id": "A", "text": "Elefante africano" },
+        { "id": "B", "text": "Jirafa" },
+        { "id": "C", "text": "Rinoceronte blanco" },
+        { "id": "D", "text": "Ballena azul" }
+      ],
+      "correct_option": "D",
+      "time_limit_seconds": 12
+    },
+    {
+      "id": "Q-022",
+      "category": "naturaleza",
+      "difficulty": "hard",
+      "prompt": "¿Cuántos corazones tiene un pulpo?",
+      "options": [
+        { "id": "A", "text": "Uno" },
+        { "id": "B", "text": "Dos" },
+        { "id": "C", "text": "Tres" },
+        { "id": "D", "text": "Cuatro" }
+      ],
+      "correct_option": "C",
+      "time_limit_seconds": 15
+    },
+    {
+      "id": "Q-023",
+      "category": "cultura general",
+      "difficulty": "easy",
+      "prompt": "¿Cuántas cuerdas tiene una guitarra estándar?",
+      "options": [
+        { "id": "A", "text": "Cinco" },
+        { "id": "B", "text": "Seis" },
+        { "id": "C", "text": "Siete" },
+        { "id": "D", "text": "Ocho" }
+      ],
+      "correct_option": "B",
+      "time_limit_seconds": 10
+    },
+    {
+      "id": "Q-024",
+      "category": "cultura general",
+      "difficulty": "medium",
+      "prompt": "¿En qué ciudad se encuentra la Torre Eiffel?",
+      "options": [
+        { "id": "A", "text": "Bruselas" },
+        { "id": "B", "text": "Madrid" },
+        { "id": "C", "text": "París" },
+        { "id": "D", "text": "Roma" }
+      ],
+      "correct_option": "C",
+      "time_limit_seconds": 10
+    }
+  ]
+}
