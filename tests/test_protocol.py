@@ -16,6 +16,7 @@ from src.common.protocol import (
     MalformedMessageError,
     Message,
     MessageType,
+    ProtocolHandler,
     create_error_response,
     create_message,
     create_ping,
@@ -351,3 +352,33 @@ class TestMessageDataclassAndHelpers:
         }
         for err in expected_errors:
             assert ErrorCode.has_value(err), f"Falta código en ErrorCode: {err}"
+
+
+class TestProtocolHandler:
+    """Pruebas para la clase de ayuda ProtocolHandler."""
+
+    def test_feed_accumulates_and_extracts_messages(self) -> None:
+        handler = ProtocolHandler()
+        assert handler.buffer == ""
+
+        # Enviar fragmento incompleto
+        msg_bytes = encode_message(msg_type="PING", payload={"v": 1}, request_id="1")
+        chunk1 = msg_bytes[:10]
+        chunk2 = msg_bytes[10:]
+
+        msgs1 = handler.feed(chunk1)
+        assert len(msgs1) == 0
+        assert len(handler.buffer) > 0
+
+        # Enviar resto del fragmento
+        msgs2 = handler.feed(chunk2)
+        assert len(msgs2) == 1
+        assert msgs2[0]["type"] == "PING"
+        assert handler.buffer == ""
+
+    def test_clear_buffer(self) -> None:
+        handler = ProtocolHandler()
+        handler.feed("incomplete chunk")
+        assert handler.buffer == "incomplete chunk"
+        handler.clear()
+        assert handler.buffer == ""

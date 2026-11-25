@@ -280,6 +280,40 @@ def decode_to_messages(buffer: str | bytes) -> tuple[list[Message], str]:
     return typed_messages, remaining
 
 
+class ProtocolHandler:
+    """Gestiona el búfer de flujo TCP y el enmarcado de mensajes para una conexión."""
+
+    def __init__(self) -> None:
+        self._buffer: str = ""
+
+    @property
+    def buffer(self) -> str:
+        """Contenido actual del búfer remanente no terminado."""
+        return self._buffer
+
+    def feed(self, data: bytes | str) -> list[dict[str, Any]]:
+        """Incorpora datos recibidos y retorna los mensajes completos deserializados.
+
+        Args:
+            data: Fragmento de bytes o texto recibido desde el socket.
+
+        Returns:
+            list[dict[str, Any]]: Lista de mensajes JSON validados y completos.
+        """
+        if isinstance(data, bytes):
+            text = data.decode("utf-8", errors="replace")
+        else:
+            text = data
+
+        self._buffer += text
+        messages, self._buffer = decode_messages(self._buffer)
+        return messages
+
+    def clear(self) -> None:
+        """Limpia el búfer remanente."""
+        self._buffer = ""
+
+
 # --- Funciones Auxiliares de Construcción de Mensajes ---
 
 
