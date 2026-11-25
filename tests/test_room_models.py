@@ -78,6 +78,15 @@ class TestPlayerModel(unittest.TestCase):
 class TestRoomModel(unittest.TestCase):
     """Pruebas para la entidad Room y su ciclo de vida individual."""
 
+    def test_original_player_mutation_does_not_change_room(self) -> None:
+        room = Room(room_id="TRV-001", room_name="Test", host_id="p-1")
+        player = Player(player_id="p-1", name="Alice")
+        room.add_player(player)
+        player.name = "Changed"
+        player.score = 100
+        self.assertEqual(room.get_player("p-1").name, "Alice")
+        self.assertEqual(room.get_player("p-1").score, 0)
+
     def test_room_creation_defaults(self) -> None:
         room = Room(room_id="trv-1001", room_name="", host_id="p-1")
         self.assertEqual(room.room_id, "TRV-1001")
@@ -125,7 +134,8 @@ class TestRoomModel(unittest.TestCase):
         room.add_player(host)
 
         self.assertEqual(room.current_players_count, 1)
-        self.assertTrue(host.is_host)
+        self.assertFalse(host.is_host)
+        self.assertTrue(room.get_player("p-host").is_host)
         self.assertTrue(room.has_player("p-host"))
         self.assertTrue(room.has_player_name("hostuser"))
 
@@ -209,7 +219,7 @@ class TestRoomModel(unittest.TestCase):
 
         # p2 ahora debe ser el host
         self.assertEqual(room.host_id, "p-2")
-        self.assertTrue(p2.is_host)
+        self.assertTrue(room.get_player("p-2").is_host)
         self.assertEqual(room.current_players_count, 1)
 
     def test_remove_last_player_clears_host(self) -> None:

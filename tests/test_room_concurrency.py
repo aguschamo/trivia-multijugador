@@ -9,7 +9,9 @@ Verifica condiciones de carrera críticas en entornos multihilo:
 from __future__ import annotations
 
 import threading
+import time
 import unittest
+from queue import Queue
 from typing import Any
 
 from src.common.protocol import MessageType, create_message
@@ -24,6 +26,27 @@ from src.server.service import RoomService
 class TestRoomConcurrency(unittest.TestCase):
     """Pruebas de estrés y condiciones de carrera sobre Room y RoomManager."""
 
+    def run_workers(self, worker: Any, count: int) -> None:
+        errors: Queue[BaseException] = Queue()
+
+        def guarded(index: int) -> None:
+            try:
+                worker(index)
+            except BaseException as error:
+                errors.put(error)
+
+        threads = [threading.Thread(target=guarded, args=(i,), daemon=True) for i in range(count)]
+        for thread in threads:
+            thread.start()
+        deadline = time.monotonic() + 10
+        for thread in threads:
+            thread.join(timeout=max(0, deadline - time.monotonic()))
+        self.assertTrue(all(not thread.is_alive() for thread in threads), "Hay hilos bloqueados")
+        failures = []
+        while not errors.empty():
+            failures.append(errors.get_nowait())
+        self.assertEqual(failures, [], f"Errores inesperados: {failures}")
+
     def test_concurrent_join_last_slot_race_condition(self) -> None:
         """Prueba crítica:
 
@@ -37,7 +60,7 @@ class TestRoomConcurrency(unittest.TestCase):
         room = manager.create_room(host, room_name="Sala Exclusiva", max_players=2)
 
         num_competitors = 15
-        barrier = threading.Barrier(num_competitors)
+        barrier = threading.Barrier(num_competitors, timeout=5)
 
         success_count = 0
         room_full_count = 0
@@ -58,15 +81,7 @@ class TestRoomConcurrency(unittest.TestCase):
                 with lock_stats:
                     room_full_count += 1
 
-        threads = [
-            threading.Thread(target=competitor_worker, args=(i,), name=f"Competitor-{i}")
-            for i in range(num_competitors)
-        ]
-
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join(timeout=5.0)
+        self.run_workers(competitor_worker, num_competitors)
 
         # Aserciones de exclusión mutua
         self.assertEqual(
@@ -90,7 +105,7 @@ class TestRoomConcurrency(unittest.TestCase):
         """
         manager = RoomManager()
         num_rooms = 40
-        barrier = threading.Barrier(num_rooms)
+        barrier = threading.Barrier(num_rooms, timeout=5)
 
         created_rooms: list[str] = []
         lock_list = threading.Lock()
@@ -103,15 +118,7 @@ class TestRoomConcurrency(unittest.TestCase):
             with lock_list:
                 created_rooms.append(room.room_id)
 
-        threads = [
-            threading.Thread(target=creator_worker, args=(i,))
-            for i in range(num_rooms)
-        ]
-
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join(timeout=5.0)
+        self.run_workers(creator_worker, num_rooms)
 
         self.assertEqual(len(created_rooms), num_rooms)
         self.assertEqual(
@@ -128,7 +135,7 @@ class TestRoomConcurrency(unittest.TestCase):
         room = manager.create_room(host, max_players=20)
 
         num_threads = 16
-        barrier = threading.Barrier(num_threads)
+        barrier = threading.Barrier(num_threads, timeout=5)
 
         def worker(idx: int) -> None:
             p_id = f"worker-{idx}"
@@ -136,17 +143,10 @@ class TestRoomConcurrency(unittest.TestCase):
             barrier.wait()
 
             for _ in range(5):
-                try:
-                    manager.join_room(room.room_id, player)
-                    manager.leave_room(p_id)
-                except Exception:
-                    pass
+                manager.join_room(room.room_id, player)
+                manager.leave_room(p_id)
 
-        threads = [threading.Thread(target=worker, args=(i,)) for i in range(num_threads)]
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join(timeout=5.0)
+        self.run_workers(worker, num_threads)
 
         # Si el test finaliza sin timeouts ni excepciones bloqueadas, no hubo deadlocks
         self.assertTrue(room.current_players_count >= 1)
@@ -196,7 +196,7 @@ class TestRoomConcurrency(unittest.TestCase):
         room_code = host_handler.messages[0]["payload"]["room_id"]
 
         num_joiners = 8
-        barrier = threading.Barrier(num_joiners)
+        barrier = threading.Barrier(num_joiners, timeout=5)
 
         def join_worker(idx: int) -> None:
             cid = f"joiner-{idx}"
@@ -213,14 +213,7 @@ class TestRoomConcurrency(unittest.TestCase):
                 ),
             )
 
-        threads = [
-            threading.Thread(target=join_worker, args=(i,))
-            for i in range(num_joiners)
-        ]
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join(timeout=5.0)
+        self.run_workers(join_worker, num_joiners)
 
         # Evaluar la secuencia de ROOM_STATE recibida por el Host
         room_states = [

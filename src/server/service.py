@@ -168,6 +168,7 @@ class RoomService:
                 room_name=room_name,
                 max_players=max_players,
                 rounds_count=rounds_count,
+                reserve_broadcast=True,
             )
         except PlayerAlreadyInRoomError as err:
             client.send_message(
@@ -198,20 +199,22 @@ class RoomService:
             )
             return
 
-        logger.info(
-            "[%s] Sala creada con éxito: %s (Host: %s)",
-            client.client_id,
-            room.room_id,
-            player.name,
-        )
-
-        # Enviar respuesta formal ROOM_STATE al anfitrión que creó la sala
-        room_state = create_message(
-            msg_type=MessageType.ROOM_STATE,
-            payload=room.to_dict(),
-            request_id=req_id,
-        )
-        client.send_message(room_state)
+        try:
+            logger.info(
+                "[%s] Sala creada con éxito: %s (Host: %s)",
+                client.client_id,
+                room.room_id,
+                player.name,
+            )
+            # La reserva se tomó antes de publicar la sala en RoomManager.
+            room_state = create_message(
+                msg_type=MessageType.ROOM_STATE,
+                payload=room.to_dict(),
+                request_id=req_id,
+            )
+            client.send_message(room_state)
+        finally:
+            room.broadcast_lock.release()
 
     def _handle_join_room(
         self,
@@ -337,14 +340,14 @@ class RoomService:
         ni el cerrojo global del RoomManager.
         """
         with room.broadcast_lock:
-            payload_data = room.to_dict()
+            payload_data, player_ids = room.snapshot()
 
-            for player in room.get_players():
-                target_handler = self.server.get_client(player.player_id)
+            for player_id in player_ids:
+                target_handler = self.server.get_client(player_id)
                 if target_handler is None or not target_handler.is_running:
                     continue
 
-                if player.player_id == joining_client_id and joining_request_id:
+                if player_id == joining_client_id and joining_request_id:
                     msg = create_message(
                         msg_type=MessageType.ROOM_STATE,
                         payload=payload_data,
